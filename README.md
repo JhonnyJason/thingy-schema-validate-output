@@ -28,10 +28,11 @@ npm install -g thingy-schema-validate
 Current Functionality
 ---------------------
 
-We have some Enum Types. We may import it into a validators-modulefile  as:
+We have some "Enum" Types. We may import it into a validators-modulefile  as:
 ```
 import {
-    NUMBER, STRING, STRINGHEX, STRINGHEX32, STRINGHEX64, STRINGHEX128, BOOLEAN, ARRAY, NUMBERORNULL, OBJECT
+    NUMBER, STRING, STRINGHEX, STRINGHEX32, STRINGHEX64, STRINGHEX128, 
+    BOOLEAN, ARRAY, NUMBERORNULL, OBJECT, OBJECTORUNDEFINED, NONNULLOBJECT
 } from "thingy-schema-validate"
 ```
 

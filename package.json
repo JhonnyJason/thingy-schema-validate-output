@@ -1,22 +1,28 @@
 {
-  "name": "thingy-schema-validate",
-  "version": "0.0.1",
-  "description": "JSON schema validation for the thingy ecosystem - more primitive and simple than real JSON schemas.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": ["thingy", "schema", "validation", "schema-validation", "json"],
-  "author": "Lenard Frommelt lenard@frommelt.dev",
-  "license": "Unlicense",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JhonnyJason/thingy-schema-validate-output.git"
-  },
-  "bugs": {
-    "url": "https://github.com/JhonnyJason/thingy-schema-validate/issues"
-  },
-  "homepage": "https://github.com/JhonnyJason/thingy-schema-validate-output#REAMDE",
-  "dependencies": {},
-  "type": "module"
+    "name": "thingy-schema-validate",
+    "version": "0.0.1",
+    "description": "JSON schema validation for the thingy ecosystem - more primitive and simple than real JSON schemas.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "thingy",
+        "schema",
+        "validation",
+        "schema-validation",
+        "json"
+    ],
+    "author": "Lenard Frommelt lenard@frommelt.dev",
+    "license": "Unlicense",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/JhonnyJason/thingy-schema-validate-output.git"
+    },
+    "bugs": {
+        "url": "https://github.com/JhonnyJason/thingy-schema-validate/issues"
+    },
+    "homepage": "https://github.com/JhonnyJason/thingy-schema-validate-output#REAMDE",
+    "dependencies": {},
+    "type": "module"
 }

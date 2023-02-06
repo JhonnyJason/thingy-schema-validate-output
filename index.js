@@ -23,8 +23,12 @@ export var NUMBERORNULL = 8;
 
 export var OBJECT = 9;
 
+export var OBJECTORUNDEFINED = 10;
+
+export var NONNULLOBJECT = 11;
+
 //###########################################################
-assertionFunctions = new Array(10);
+assertionFunctions = new Array(12);
 
 //###########################################################
 //region hexHelpers
@@ -38,6 +42,7 @@ for (j = 0, len = hexChars.length; j < len; j++) {
 }
 
 //endregion
+Was;
 
 //###########################################################
 //region all Assertion Functions
@@ -141,6 +146,24 @@ assertionFunctions[OBJECT] = function(arg) {
   }
 };
 
+assertionFunctions[OBJECTORUNDEFINED] = function(arg) {
+  if (typeof arg === "undefined") {
+    return;
+  }
+  if (typeof arg !== "object") {
+    throw new Error("Not an Object!");
+  }
+};
+
+assertionFunctions[NONNULLOBJECT] = function(arg) {
+  if (arg === null) {
+    throw new Error("Is null!");
+  }
+  if (typeof arg !== "object") {
+    throw new Error("Not an Object!");
+  }
+};
+
 //endregion
 
 //###########################################################
@@ -149,7 +172,7 @@ export var validate = function(obj, schema) {
   objKeys = Object.keys(obj);
   argKeys = Object.keys(schema);
   if (objKeys.length !== argKeys.length) {
-    throw new Error(`Error: The Number of parameters in the obj, did not match the expected number. ${argKeys.length} vs ${objKeys.length}`);
+    throw new Error(`Error: The Number of parameters in the obj, did not match the expected number. Expected ${argKeys.length} vs ${objKeys.length} present`);
   }
   for (i = k = 0, len1 = objKeys.length; k < len1; i = ++k) {
     key = objKeys[i];
