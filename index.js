@@ -42,7 +42,6 @@ for (j = 0, len = hexChars.length; j < len; j++) {
 }
 
 //endregion
-Was;
 
 //###########################################################
 //region all Assertion Functions
