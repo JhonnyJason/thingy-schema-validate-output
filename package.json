@@ -1,6 +1,6 @@
 {
     "name": "thingy-schema-validate",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "JSON schema validation for the thingy ecosystem - more primitive and simple than real JSON schemas.",
     "main": "index.js",
     "scripts": {

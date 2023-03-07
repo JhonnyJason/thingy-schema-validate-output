@@ -29,58 +29,31 @@ Current Functionality
 ---------------------
 
 We have some "Enum" Types. We may import it into a validators-modulefile  as:
-```
+```coffeescript
 import {
     NUMBER, STRING, STRINGHEX, STRINGHEX32, STRINGHEX64, STRINGHEX128, 
-    BOOLEAN, ARRAY, NUMBERORNULL, OBJECT, OBJECTORUNDEFINED, NONNULLOBJECT
+    BOOLEAN, ARRAY, OBJECT, NONNULLOBJECT, NUMBERORNULL, STRINGORNULL, 
+    STRINGHEXORNULL, STRINGHEX32ORNULL, STRINGHEX64ORNULL, 
+    STRINGHEX128ORNULL, BOOLEANORNULL, ARRAYORNULL
 } from "thingy-schema-validate"
 ```
 
 This way we may build schemas like this:
-```
-function1Arguments = {
+```coffeescript
+functionArgumentSchema = {
     argString: STRING
     argNumber: NUMBER
 }
-
-function1Response = {
-    ok: BOOLEAN
-}
 ```
 
-Then we may build the validationFunctions:
-```
+Then we may use the validate Function to validate any object for this schema
+```coffeescript
 import { validate } from "thingy-schema-validate"
 
-validateFunction1Arguments = (args) -> validate(args, function1Arguments)
-validateFunction1Response = (response) -> validate(response, function1Response)
+args = foundArgsFromAroundTheCorner()
 
-export argumentValidators = {
-    function1: validateFunction1Arguments
-}
-
-export responseValidators = {
-    funcion1: validateFunction1Response
-}
-
-```
-
-Then we use it to validate:
-```
-import { argumentValidators } from "validators-module.js"
-import { responseValidators } from "validators-module.js"
-
-# e.g. Assuming body-parser.json is active on express 4 
-onFunction1 = (req) ->
-    try argumentValidators.function1(req.body)
-    catch(err) then throw new Error("Function1 invalid Arguments detected!")
-
-    response = executeFunction1(req.body)
-
-    try responseValidators.function1(respnse)
-    catch(err) then throw new Error("Function1 invalid Response detected!")
-    
-    return response
+try validate(args, functionArgumentSchema)
+catch err then log "seems the args was invalid!"
 
 ```
 

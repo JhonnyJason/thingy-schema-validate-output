@@ -19,16 +19,28 @@ export var BOOLEAN = 6;
 
 export var ARRAY = 7;
 
-export var NUMBERORNULL = 8;
+export var OBJECT = 8;
 
-export var OBJECT = 9;
+export var NONNULLOBJECT = 9;
 
-export var OBJECTORUNDEFINED = 10;
+export var NUMBERORNULL = 10;
 
-export var NONNULLOBJECT = 11;
+export var STRINGORNULL = 11;
+
+export var STRINGHEXORNULL = 12;
+
+export var STRINGHEX32ORNULL = 13;
+
+export var STRINGHEX64ORNULL = 14;
+
+export var STRINGHEX128ORNULL = 15;
+
+export var BOOLEANORNULL = 16;
+
+export var ARRAYORNULL = 17;
 
 //###########################################################
-assertionFunctions = new Array(12);
+assertionFunctions = new Array(18);
 
 //###########################################################
 //region hexHelpers
@@ -130,25 +142,7 @@ assertionFunctions[ARRAY] = function(arg) {
   }
 };
 
-assertionFunctions[NUMBERORNULL] = function(arg) {
-  if (arg === null) {
-    return;
-  }
-  if (typeof arg !== "number") {
-    throw new Error("Neither a number nor null!");
-  }
-};
-
 assertionFunctions[OBJECT] = function(arg) {
-  if (typeof arg !== "object") {
-    throw new Error("Not an Object!");
-  }
-};
-
-assertionFunctions[OBJECTORUNDEFINED] = function(arg) {
-  if (typeof arg === "undefined") {
-    return;
-  }
   if (typeof arg !== "object") {
     throw new Error("Not an Object!");
   }
@@ -163,6 +157,115 @@ assertionFunctions[NONNULLOBJECT] = function(arg) {
   }
 };
 
+assertionFunctions[NUMBERORNULL] = function(arg) {
+  if (arg === null) {
+    return;
+  }
+  if (typeof arg !== "number") {
+    throw new Error("Neither a number nor null!");
+  }
+};
+
+assertionFunctions[STRINGORNULL] = function(arg) {
+  if (arg === null) {
+    return;
+  }
+  if (typeof arg !== "string") {
+    throw new Error("Not a string!");
+  }
+};
+
+assertionFunctions[STRINGHEXORNULL] = function(arg) {
+  var k, len1;
+  if (arg === null) {
+    return;
+  }
+  if (typeof arg !== "string") {
+    throw new Error("Not a string!");
+  }
+  for (k = 0, len1 = arg.length; k < len1; k++) {
+    c = arg[k];
+    if (hexMap[c] == null) {
+      throw new Error("Not a HexString!");
+    }
+  }
+};
+
+assertionFunctions[STRINGHEX32ORNULL] = function(arg) {
+  var k, len1;
+  if (arg === null) {
+    return;
+  }
+  if (typeof arg !== "string") {
+    throw new Error("Not a string!");
+  }
+  for (k = 0, len1 = arg.length; k < len1; k++) {
+    c = arg[k];
+    if (hexMap[c] == null) {
+      throw new Error("Not a HexString!");
+    }
+  }
+  if (arg.length !== 32) {
+    throw new Error("HexString length was not 32 characters!");
+  }
+};
+
+assertionFunctions[STRINGHEX64ORNULL] = function(arg) {
+  var k, len1;
+  if (arg === null) {
+    return;
+  }
+  if (typeof arg !== "string") {
+    throw new Error("Not a string!");
+  }
+  for (k = 0, len1 = arg.length; k < len1; k++) {
+    c = arg[k];
+    if (hexMap[c] == null) {
+      throw new Error("Not a HexString!");
+    }
+  }
+  if (arg.length !== 64) {
+    throw new Error("HexString length was not 64 characters!");
+  }
+};
+
+assertionFunctions[STRINGHEX128ORNULL] = function(arg) {
+  var k, len1;
+  if (arg === null) {
+    return;
+  }
+  if (typeof arg !== "string") {
+    throw new Error("Not a string!");
+  }
+  for (k = 0, len1 = arg.length; k < len1; k++) {
+    c = arg[k];
+    if (hexMap[c] == null) {
+      throw new Error("Not a HexString!");
+    }
+  }
+  if (arg.length !== 128) {
+    throw new Error("HexString length was not 128 characters!");
+  }
+};
+
+assertionFunctions[BOOLEANORNULL] = function(arg) {
+  if (arg === null) {
+    return;
+  }
+  if (typeof arg !== "boolean") {
+    throw new Error("Not a boolean!");
+  }
+};
+
+assertionFunctions[ARRAYORNULL] = function(arg) {
+  if (arg === null) {
+    return;
+  }
+  if (!Array.isArray(arg)) {
+    throw new Error("Not an array!");
+  }
+};
+
 //endregion
 
 //###########################################################
@@ -171,7 +274,7 @@ export var validate = function(obj, schema) {
   objKeys = Object.keys(obj);
   argKeys = Object.keys(schema);
   if (objKeys.length !== argKeys.length) {
-    throw new Error(`Error: The Number of parameters in the obj, did not match the expected number. Expected ${argKeys.length} vs ${objKeys.length} present`);
+    throw new Error(`Error: The Number of parameters in the obj, did not match the expected number. Expected: ${argKeys.length} Present: ${objKeys.length} `);
   }
   for (i = k = 0, len1 = objKeys.length; k < len1; i = ++k) {
     key = objKeys[i];
@@ -186,7 +289,7 @@ export var validate = function(obj, schema) {
       assertionFunctions[type](arg);
     } catch (error) {
       err = error;
-      throw new Error(`Error: unexpected format of parameter ${label} - ${err.message}`);
+      throw new Error(`Error: unexpected format of parameter '${label}'! ${err.message}`);
     }
   }
 };
