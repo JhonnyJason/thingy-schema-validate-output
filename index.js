@@ -271,15 +271,21 @@ assertionFunctions[ARRAYORNULL] = function(arg) {
 //###########################################################
 export var validate = function(obj, schema) {
   var arg, argKeys, err, i, k, key, label, len1, objKeys, type;
+  if (schema == null) {
+    throw new Error("No schema provided!");
+  }
+  if (obj == null) {
+    throw new Error("No Object to validate!");
+  }
   objKeys = Object.keys(obj);
   argKeys = Object.keys(schema);
   if (objKeys.length !== argKeys.length) {
-    throw new Error(`Error: The Number of parameters in the obj, did not match the expected number. Expected: ${argKeys.length} Present: ${objKeys.length} `);
+    throw new Error(`The Number of parameters in the obj, did not match the expected number. Expected: ${argKeys.length} Present: ${objKeys.length} `);
   }
   for (i = k = 0, len1 = objKeys.length; k < len1; i = ++k) {
     key = objKeys[i];
     if (key !== argKeys[i]) {
-      throw new Error(`Error: parameter @ index: ${i} had wrong key! expected: '${argKeys[i]}'  detected: '${key}'`);
+      throw new Error(`Parameter @ index: ${i} had wrong key! expected: '${argKeys[i]}'  detected: '${key}'`);
     }
   }
   for (label in obj) {
@@ -289,7 +295,7 @@ export var validate = function(obj, schema) {
       assertionFunctions[type](arg);
     } catch (error) {
       err = error;
-      throw new Error(`Error: unexpected format of parameter '${label}'! ${err.message}`);
+      throw new Error(`Unexpected format of parameter '${label}'! ${err.message}`);
     }
   }
 };
