@@ -1,29 +1,33 @@
-# thingy-schema-utils 
-A lightweight, zero-dependency utility for precompiling validators for your structured data in JavaScript. Define your Schema in the most simple and non-verbose and validate them conveniently.
+# thingy-schema-validate 
+A lightweight, zero-dependency utility for precompiling validators for your structured data in JavaScript. Define your Schema in the most simple and non-verbose way and validate them conveniently.
 
-Supports a wide range of common data types, including strings, numbers, booleans, arrays, objects, and specialized formats like hex strings and emails. + Gives you the power to create new types as well.
+## Features
+- **Nice Schema Definitions**: Write schemas quickly, which don't mess up your code.
+- **Fast Schema Validation**: Precompile the validator function once from your schema. Validate your data more efficiently for the rest of your programs runtime. (Still has some optimization potential though^^)
+- **Good Set of Predefined Types**: Common data types, including strings, numbers, booleans, arrays, objects, and specialized formats like hex strings, clean strings, emails and non-empty strings. Plus versions that may be `null` or even `undefined` are already available to simply use.
+- **Extensible**: Define custom types and error messages.
+
 
 # Background
-When working on my Service Communication Interface(SCI)-mechanics the need to validate the inputs and outputs arose. As other tools that would fit the purpose are too verbose and complex to define the schemas this is the simplemost version of it - or judge by yourself ;-).
+When working on my Service Communication Interface(SCI)-mechanics the need to validate the inputs and outputs arose. As other tools that would fit the purpose use schema definitions which are too verbose and too ugly this is the nicest JS way of defining schemas - or well, judge by yourself ;-).
 
-Latest updates (v0.0.5 -> v0.0.6 = complete rewrite):
+### Latest updates (v0.0.5 -> v0.0.6 = complete rewrite):
 - New base-types e.g. `STRINGEMAIL`, `STRINGCLEAN` and `OBJECTCLEAN`
 - Optional types that can be non-existent e.g. `mySchema = { user: STRINGCLEAN, isAdmin: BOOLEANORNOTHING }`
 - Arbitrarily nested schemas
 - Schema can be a different base-type now e.g. `mySchema = STRING` or `mySchema = [ NUMBER, STRING ]` 
-- Precompilation of validator functions for improved efficiency (+30%)
-- Return a string instead of throwing an exception when invalid -> 4-8 time faster
-
-## Features
-- **Nice Schema Definitions**: Write schemas which don't mess up your code.
-- **Fast Schema Validation**: Precompile the validator function once from your schema. Validate your data more efficiently for the rest of your programs runtime. (Still has some optimization potential though^^)
-- **Extensible**: Define custom types and error messages.
+- Precompilation of validator functions 
+- General performance improvement: 
+    - x1.5 for non-compiled validation (no errors) 
+    - x11  for non-compiled validatiokn (all errors)
+    - x2.7 for compiled validation (no errors)
+    - x19.7 for compiled validation (al errors)
 
 # Usage
 Installation
 ------------
 ```bash
-npm install thingy-schema-utils
+npm install thingy-schema-validate
 ```
 
 Current Functionality
@@ -38,10 +42,10 @@ Current Functionality
 ### Functions
 
 - `validate(obj, schema, staticStrings)`: Direct validation of Object to schema.
-- `createValidator(schema, staticStrings)`: Returns a validator function which is ~30% faster then validate).
+- `createValidator(schema, staticStrings)`: Returns a validator function is ~x1.8 faster then `validate`.
 - `getErrorMessage(errorCode)`: Returns the error message for a given code.
-- `defineNewType(validatorFunc)`: Adds a new type.
 - `defineNewError(errorMessage)`: Adds a new error code.
+- `defineNewType(validatorFunc)`: Adds a new type.
 - `setTypeValidator(type, validatorFunc)`: Overrides typeValidator for given type.
 - `lock()`: Freezes internal maps.
 
@@ -52,14 +56,14 @@ Before Validation you may create your own custom types and error messages and lo
 You may create nice multilevel schemas of arbitrary depth. Then compile the validator for fast validation.
 
 When the object passed to the validator is valid the function simply returns void/`undefined` -> falsly value is valid. 
-For invalod objects the `errorCode` is returned which is a number.
+For invalod objects the `errorCode` is returned which is a number. (error codes cannot be 0)
 You get the corresponding errorMessage with `getErrorMessage`
 
 ```javascript
 import {
-  STRINGCLEAN, NUMBER, BOOLEAN, ARRAY, createValidator, createStringifier,
+  STRINGCLEAN, NUMBER, BOOLEAN, ARRAY, createValidator,
   getErrorMessage
-} from 'thingy-schema-utils';
+} from 'thingy-schema-validate';
 
 // Define your schema
 const userSchema = {
@@ -145,7 +149,7 @@ lock(); // Prevents further mutations to types and errors
 
 ## Default Types
 
-`thingy-schema-utils` provides a wide range of built-in types for common validation needs.
+`thingy-schema-validate` provides a wide range of built-in types for common validation needs.
 Here’s an extensive list of all available types:
 
 ---

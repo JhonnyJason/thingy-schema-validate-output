@@ -1266,23 +1266,6 @@ export var getErrorMessage = function(errorCode) {
 };
 
 //###########################################################
-//# takes a validatorFunction
-//#    this function cannot overwrite predefined types 
-//# returns the new enumeration number for the defined Type
-export var defineNewType = function(validatorFunc) {
-  var newTypeId;
-  if (locked) {
-    throw new Error("We are closed!");
-  }
-  newTypeId = typeValidatorFunctions.length;
-  if (newTypeId >= 1000) {
-    throw new Error("Exeeding type limit!");
-  }
-  typeValidatorFunctions[newTypeId] = validatorFunc;
-  return newTypeId;
-};
-
-//###########################################################
 //# takes errorCode and errorMessage
 //#     this function cannot overwrite predefined ErrorCodes
 //# returns the new errorCode for the defined Error
@@ -1300,6 +1283,23 @@ export var defineNewError = function(errorMessage) {
   }
   ErrorToMessage[errorCode] = errorMessage;
   return errorCode;
+};
+
+//###########################################################
+//# takes a validatorFunction
+//#    this function cannot overwrite predefined types 
+//# returns the new enumeration number for the defined Type
+export var defineNewType = function(validatorFunc) {
+  var newTypeId;
+  if (locked) {
+    throw new Error("We are closed!");
+  }
+  newTypeId = typeValidatorFunctions.length;
+  if (newTypeId >= 1000) {
+    throw new Error("Exeeding type limit!");
+  }
+  typeValidatorFunctions[newTypeId] = validatorFunc;
+  return newTypeId;
 };
 
 //###########################################################
