@@ -129,11 +129,20 @@ Notice that there has been set an arbitrary limit of a maximum of 999 different 
 // Define a new error
 const NO = defineNewError("Simply NO!");
 
+const checkStringSize = (arg) {
+    if(typeof arg != "string" 
+        || arg.length > 10 
+        || arg.length < 3) { return NO }
+}
 // Define a new type
-const STRINGSIZED = defineNewType(
-  (a) => { if(typeof a != "string" || a.length > 10 || a.length < 3) return NO },
-  (a) => { return '"'+a+'"' }
-);
+const STRINGSIZED = defineNewType(checkStringSized);
+
+// User your new Type
+const userSchema = {
+    role: "user",
+    shortName: STRINGSIZED,
+    name: STRINCLEAN
+}
 ```
 
 ### 4. Locking the Library
