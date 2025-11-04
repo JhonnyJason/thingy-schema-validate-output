@@ -1,20 +1,14 @@
 {
     "name": "thingy-schema-validate",
-    "version": "0.0.5",
-    "description": "JSON schema validation for the thingy ecosystem - more primitive and simple than real JSON schemas.",
+    "version": "0.0.6",
+    "description": "JSON schema validation for the thingy ecosystem - more simple than othr JSON schemas.",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "keywords": [
-        "thingy",
-        "schema",
-        "validation",
-        "schema-validation",
-        "json"
-    ],
+    "keywords": ["thingy", "schema", "validation", "json-schema", "validate", "schema-compilation", "JSON", "validator"],
     "author": "Lenard Frommelt lenard@frommelt.dev",
-    "license": "Unlicense",
+    "license": "CC0-1.0",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/JhonnyJason/thingy-schema-validate-output.git"
